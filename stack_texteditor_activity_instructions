@@ -1,0 +1,17 @@
+Task:
+
+Stacks are used in real world applications for several purposes. One common use is in a text editor. The ctr+z and ctr+y and used for undo and redo, and the working and internal implementation of these functions is using stacks. In order to get an insight into this real world application the following is the code snippet for a mini text editor. However this editor which is run on a terminal or on a compiler can only be used to type characters. The ')' is the keystroke command for undo and ')' the command for redo. Backspaces and arrow keys are treated as mere characters. Try understanding the overall code first and then follow the comments to fill the two functions with which your very own mini text editor is ready!
+
+Instructions:
+
+Compilation to be done in Linux using the following command for the ncurses library for graphics : g++ actual_workshop.cpp -lncurses -o test
+
+1. initscr() function initialises the graphics screen.
+2. endwin() function deinitialises the graphics screen.
+3. The getch() function takes a keystroke from the keyboard.
+
+4. The printw() command performs the same function as cout however it is the command used on the graphics screen. 
+5. However in the graphics mode the printw() stores the parameter given to it in memory and is reflected on the screen only after the  refresh()   command is called.
+6. clear() clears the graphics screen however the graphics mode in still on.
+
+For further clarity on ncurses library watch: https://www.youtube.com/watch?v=Cg_u60jX8Y4
