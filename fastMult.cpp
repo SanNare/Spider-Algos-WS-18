@@ -32,6 +32,20 @@ string add(string a,string b) //adding two numbers represented as strings
 
 string subtract(string a,string b)//subtracting two numbers represented as strings
 {
+	int i=0;
+	while(i<a.length()&&a[i]=='0') i++;
+	if (i==a.length())i--;
+	a=a.substr(i,a.length()-i);
+	
+	i=0;
+	while(i<b.length()&&b[i]=='0') i++;
+	if (i==b.length()) i--;
+	b=b.substr(i,b.length()-i);
+	
+	if (a=="0") return b;
+	if (b=="0") return a;
+	//cout << a << ' ' << b << '\n';
+	
     bool flag = false;
     if(a.length()<b.length())
     {
@@ -56,7 +70,20 @@ string subtract(string a,string b)//subtracting two numbers represented as strin
 string multiply(string a,string b)//multiplying two numbers represented as strings
 {
     int x = a.length(),y = b.length();
-    int n = max(x,y);
+    if (x!=y) {
+    	string lencorrect="";
+    	while(x<y) {
+    		lencorrect+="0";
+    		x++;
+		}
+		while(x>y) {
+			lencorrect+="0";
+			y++;
+		}
+		if (a.length()<b.length()) a=lencorrect+a;
+		else b=lencorrect+b;
+	}
+    int n = x;
     if(n == 1)
     {
         int ans = (a[0]-48)*(b[0]-48);
@@ -64,15 +91,27 @@ string multiply(string a,string b)//multiplying two numbers represented as strin
     }
     else
     {
-        string al = a.substr(0,floor(a.length()/2)),ar = a.substr(floor(a.length()/2),ceil(a.length()/2));
-        string bl = b.substr(0,floor(b.length()/2)),br = b.substr(floor(b.length()/2),ceil(b.length()/2));
+		string al=a.substr(0,x/2),ar=a.substr(x/2,x-x/2);
+		string bl=b.substr(0,x/2),br=b.substr(x/2,x-x/2);
         string p1 = multiply(al,bl),p2 = multiply(ar,br),p3 = multiply(add(al,ar),add(bl,br));
-        for(int i = 1;i<=n;i++)
-            p1+="0";
+        
+        
         string t = subtract(p3,add(p1,p2));
-        for(int i = 1;i<=n/2;i++)
-            t+="0";
-        return add(p1,add(t,p2));
+        string tt;
+        if (t[0]!='-') {
+        	for(int i = 1;i<=n-n/2;i++)
+            	t+="0";
+        	tt= add(t,p2);
+        }
+        else {
+        	t=subtract(add(p1,p2),p3);
+        	for(int i = 1;i<=n/2;i++)
+            	t+="0";
+        	tt= subtract(p2,t);
+		}
+        for(int i = 1;i<=2*(n-n/2);i++)
+            p1+="0";
+        return add(tt,p1);
     }
 }
 
@@ -85,17 +124,22 @@ string randomNumber(int a,int b)//a to b digit number
     return n;
 }
 
-int main()
-{
-    cout<<subtract("100","34")<<endl<<subtract("34","100000")<<endl;
-    cout<<multiply("2","6")<<endl;
-    srand(time(nullptr));
-    string a = randomNumber(10,20);
-    string b = randomNumber(10,20);
-    cout<<a<<endl<<b<<endl;
-    cout<<add(a,b)<<endl;
-    cout<<subtract(a,b)<<endl;
-    cout<<multiply("9","3")<<endl;
-    return 0;
+void display(string num) {
+	int i=0;
+	while(i<num.length()&&num[i]=='0') i++;
+	if (i==num.length()) i--;
+	cout << num.substr(i,num.length()-i);
 }
 
+int main()
+{
+	
+	int n,a,b;
+	cin >> n;
+	while(n--) {
+		cin >> a >> b;
+		display(multiply(to_string(a),to_string(b)));
+		cout << '\n';
+	}
+    return 0;
+}
