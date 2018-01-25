@@ -8,7 +8,7 @@ struct state{
 	{
 		cur_stat="";
 		next=NULL;
-		if_arrow_state=false;
+		//if_arrow_state=false;
 	}
 };
 // declared as global variables for accesibility from functions
@@ -18,7 +18,7 @@ state *redotop = NULL;
 void psedopushintoredo(string content)
 // the objective of this function is just to create a new node in the linked redo stack whose parameter cur_stat value is to be set to content 
 {
-      /*state *redotemp = new state;
+    /*  state *redotemp = new state;
       if(redotemp)
       {
         redotemp->next=redotop;
@@ -32,7 +32,7 @@ void psedopushintoredo(string content)
 void psedopushintoundo(string content)
 // the objective of this function is just to create a new node in the linked undo stack whose parameter cur_stat value is to be set to content 
 {
-  /*state *temp = new state;
+ /* state *temp = new state;
   if(temp)
   {
     temp->next = top;
@@ -63,6 +63,7 @@ int main()
 	  
        if(ch==' ')
 	     {  
+		       redotop = new state;
 		       buffer=buffer+ch; // buffer stores values that are entered so that when the next space is hit these values along with the space are pushed into the undo stack
            if(!space_hit)   //to check for non consecutive space hits 
 		       {
@@ -125,6 +126,7 @@ int main()
        else // a key other than undo,redo and space
     	 {
     		    buffer=buffer+ch;
+    		    redotop = new state;
     		    space_hit=0;
        }
 
@@ -133,4 +135,3 @@ int main()
   endwin(); // end graphics mode
   return 0;
 }
-
